@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table Design</title>
+    <style>
+        table{
+            border-collapse: collapse;
+            width: 60px;
+            margin: 20px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 20px;
+            text-align:center
+      }
+
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <td colspan="3">section_1 (colspan="3")</td>
+        </tr>
+        <tr>
+            <td rowspan="2">section_2 (rowspan="2")</td>
+            <td colspan="2">section_3 (colspan="2")</td>
+        </tr>
+        <tr>
+            <td>section_4</td>
+            <td>section_5</td>
+        </tr>
+        <tr>
+            <td rowspan="2">section_6 (rowspan="2")</td>
+            <td colspan="2">section_7 (colspan="2")</td>
+        </tr>
+        <tr>
+            <td>section_8</td>
+            <td>section_9</td>
+        </tr>
+    </table>
+
+</body>
+</html>
+
