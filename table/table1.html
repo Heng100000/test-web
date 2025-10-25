@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table {
+            width: 300px;
+            border-collapse: collapse;
+            margin: 20px auto;
+            /* background-color: blue; */
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: bisque;
+            color: black;
+        }
+
+        tr:nth-child(even) {
+            background-color: aqua;
+        }
+
+        tr:hover {
+            background-color: chartreuse;
+        }
+
+        caption {
+            caption-side: top;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <caption>Employee</caption>
+        <tr>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Age</th>
+        </tr>
+        <tr>
+            <td>Sokheng</td>
+            <td>IT</td>
+            <td>22</td>
+        </tr>
+        <tr>
+            <td>Kok</td>
+            <td>Sale</td>
+            <td>23</td>
+        </tr>
+        <tr>
+            <td>Kan</td>
+            <td>Sale</td>
+            <td>23</td>
+        </tr>
+    </table>
+</body>
+</html>
