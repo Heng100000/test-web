@@ -1,0 +1,102 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Grid Layout Example</title>
+  <style>
+    :root{
+      --gap: 14px;
+      --bg: #d9d9d9;
+      --box1: #ff6b6b;   /* 1 - left big block */
+      --box2: #d1ff69;   /* 2 - top-right */
+      --box3: #ff4bd6;   /* 3 - bottom-left of right column */
+      --box4a: #7f8cff;  /* 4a - bottom-right top */
+      --box4b: #7f8cff;  /* 4b - bottom-right bottom */
+      --text: #fff;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      background: #d8d8d8;
+      font-family: Arial, system-ui, sans-serif;
+    }
+
+    /* Frame with outer border to mimic the screenshot border */
+    .frame {
+      width: min(1000px, 92%);
+      margin: 28px auto;
+      padding: var(--gap);
+      background: #cfcfcf;
+      border: 8px solid #bfbfbf;
+      height: auto;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr; /* Left big block + right area */
+      grid-gap: var(--gap);
+      height: 360px;
+    }
+
+    .item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text);
+      font-weight: 700;
+      font-size: 38px;
+    }
+
+    /* Left big block (1) spans two rows on the left */
+    .a { background: var(--box1); grid-row: span 2; }
+
+    /* Right top block (2) */
+    .b { background: var(--box2); align-self: start; height: calc(50% - var(--gap)); }
+
+    /* Bottom left-right block (3) */
+    .c { background: var(--box3); align-self: end; height: calc(50% - var(--gap)); }
+
+    /* Right column's inner grid for 4a and 4b (stacked vertically) */
+    .right-inner {
+      display: grid;
+      grid-template-rows: 1fr 1fr;
+      gap: var(--gap);
+      height: 100%;
+    }
+    .d { background: var(--box4a); display:flex; align-items:center; justify-content:center; font-weight:700; color:#fff; }
+    .e { background: var(--box4b); display:flex; align-items:center; justify-content:center; font-weight:700; color:#fff; }
+
+    /* Responsive: stack to single column on narrow screens */
+    @media (max-width: 720px){
+      .grid { grid-template-columns: 1fr; height: auto; }
+      .a { grid-row: auto; height: 180px; }
+      .b, .c { height: 120px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <div class="grid" aria-label="Main grid">
+      <div class="item a" aria-label="Block 1">1</div>
+
+      <div class="right-container" style="grid-column: 2 / 3; display: grid; grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; gap: var(--gap); height: 360px;">
+        <!-- Top-right block (2) -->
+        <div class="item b" aria-label="Block 2" style="height: 50%;">2</div>
+
+        <!-- Bottom-right area with 3 on left and 4a/4b on right stack (adjust as needed) -->
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap: var(--gap); height: 50%;">
+          <div class="item c" aria-label="Block 3" style="grid-column: 1 / 2; height: 100%;">3</div>
+          <div class="right-inner" aria-label="Blocks 4a and 4b" style="grid-column: 2 / 3; height: 100%;">
+            <div class="d" aria-label="Block 4a">4a</div>
+            <div class="e" aria-label="Block 4b">4b</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
