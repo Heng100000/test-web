@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: #f5f5f5;
+        }
+
+        .box {
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+
+        #value {
+            font-size: 36px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        button {
+            background: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h2>Counter</h2>
+        <div id="value">0</div>
+        <button id="decBtn">Decrease</button>
+        <button id="incBtn">Increase</button>
+    </div>
+
+    <script>
+        class Counter {
+            constructor(initialValue, element) {
+                this.value = initialValue;
+                this.element = element;
+                this.render();
+            }
+
+            increase() {
+                this.value++;
+                this.render();
+            }
+
+            decrease() {
+                this.value--;
+                this.render();
+            }
+
+            render() {
+                this.element.textContent = this.value;
+            }
+        }
+
+        const valueDiv = document.getElementById('value');
+        const incBtn = document.getElementById('incBtn');
+        const decBtn = document.getElementById('decBtn');
+
+        const counter = new Counter(0, valueDiv);
+
+        incBtn.addEventListener('click', () => counter.increase());
+        decBtn.addEventListener('click', () => counter.decrease());
+    </script>
+</body>
+</html>
