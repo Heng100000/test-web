@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<input id="itemInput" type="text" placeholder="Enter item">
+<button onclick="addItem()">Add</button>
+
+<ul id="itemList"></ul>
+
+<script>
+function addItem() {
+  let input = document.getElementById("itemInput");
+  let newItem = input.value.trim();
+
+  if (newItem !== "") {
+    let li = document.createElement("li");
+    li.textContent = newItem;
+    document.getElementById("itemList").appendChild(li);
+
+    input.value = ""; // clear input
+  }
+}
+</script>
+
+</body>
+</html>
