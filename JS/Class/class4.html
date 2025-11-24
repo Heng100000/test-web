@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="box">
+        <h3>Product Discount</h3>
+        <input type="text" id="nameInput" placeholder="Product Name">
+        <input type="number" id="priceInput" placeholder="Price">
+        <input type="number" id="discountInput" placeholder="Discount %">
+        <button id="calcBtn">Calculate</button>
+        <p id="result"></p>
+    </div>
+
+    <script>
+        class Product {
+            constructor(name, price, discount) {
+                this.name = name;
+                this.price = price;
+                this.discount = discount;
+            }
+
+            getFinalPrice() {
+                const discountAmount = this.price * (this.discount / 100);
+                return this.price - discountAmount;
+            }
+        }
+
+        const nameInput = document.getElementById('nameInput');
+        const priceInput = document.getElementById('priceInput');
+        const discountInput = document.getElementById('discountInput');
+        const calcBtn = document.getElementById('calcBtn');
+        const result = document.getElementById('result');
+
+        calcBtn.addEventListener('click', () => {
+            const name = nameInput.value.trim();
+            const price = parseFloat(priceInput.value.trim());
+            const discount = parseFloat(discountInput.value.trim());
+
+            if(!name || isNaN(price) || isNaN(discount)) {
+                result.textContent = "Please enter valid values.";
+                return;
+            }
+
+            const product = new Product(name, price, discount);
+            const finalPrice = product.getFinalPrice().toFixed(2);
+
+            result.textContent= `Product: ${product.name}, Final Price: ${finalPrice}`;
+        })
+    </script>
+</body>
+</html>
