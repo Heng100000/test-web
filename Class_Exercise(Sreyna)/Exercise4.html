@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .quiz-container {
+    background: #ffffff;
+    padding: 30px 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+  }
+
+  h2 {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 24px;
+  }
+
+  #qtext {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+
+  #options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  button {
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    background-color: #65a0df;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  button:hover {
+    background-color: #0056b3;
+  }
+
+  #result {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  #result.correct {
+    color: #28a745;
+  }
+
+  #result.incorrect {
+    color: #dc3545;
+  }
+</style>
+</head>
+<body>
+
+<div class="quiz-container">
+  <h2>Quiz Time!</h2>
+  <p id="qtext"></p>
+
+  <div id="options"></div>
+
+  <p id="result"></p>
+</div>
+
+<script>
+class Question {
+  constructor(text, options, correctIndex) {
+    this.text = text;
+    this.options = options;
+    this.correctIndex = correctIndex;
+  }
+
+  checkAnswer(index) {
+    return index === this.correctIndex;
+  }
+}
+
+let q = new Question(
+  `How do you write "Hello World" in an alert box?`, 
+  [`msg("Hello World");`, `alert("Hello World");`, `alertBox("Hello World");`, `masBox("Hello World");`], 
+  1
+);
+
+document.getElementById("qtext").innerHTML = q.text;
+
+let optionsContainer = document.getElementById("options");
+q.options.forEach((opt, i) => {
+  let btn = document.createElement("button");
+  btn.textContent = opt;
+  btn.onclick = () => answer(i, btn);
+  optionsContainer.appendChild(btn);
+});
+
+function answer(i, btnClicked) {
+  let resultEl = document.getElementById("result");
+
+  if (q.checkAnswer(i)) {
+    resultEl.textContent = "Your answer is correct.";
+    resultEl.className = "correct";
+  } else {
+    resultEl.textContent = "Your answer is incorrect.";
+    resultEl.className = "incorrect";
+  }
+
+}
+</script>
+
+</body>
+</html>
