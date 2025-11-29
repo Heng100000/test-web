@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Rectangle Area</title>
+<style>
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #fff0f5; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+
+  .container {
+    background: #ffffff;
+    padding: 30px 40px;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    text-align: center;
+    width: 400px;
+  }
+
+  h2 {
+    color: #d63384; 
+    margin-bottom: 25px;
+    font-weight: 700;
+  }
+
+  input {
+    width: 45%;
+    padding: 12px;
+    margin: 10px 5px;
+    border: 1px solid #f6a6c1; 
+    border-radius: 8px;
+    font-size: 16px;
+    transition: 0.3s;
+  }
+
+  input:focus {
+    border-color: #d63384;
+    box-shadow: 0 0 6px rgba(214,51,132,0.3);
+    outline: none;
+  }
+
+  button {
+    width: 95%;
+    padding: 12px;
+    margin-top: 10px;
+    background: #fe8dc5; 
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  button:hover {
+    background: #f661a9;
+    transform: translateY(-2px);
+  }
+
+  #result {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #f13a96; 
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Rectangle Area</h2>
+
+  <input type="number" id="width" placeholder="Enter Width" />
+  <input type="number" id="height" placeholder="Enter Height" />
+  <button onclick="calculate()">Calculate</button>
+
+  <p id="result"></p>
+</div>
+
+<script>
+  class Rectangle {
+    constructor(width, height) {
+      this.width = width;
+      this.height = height;
+    }
+
+    area() {
+      return this.width * this.height;
+    }
+  }
+
+  function calculate() {
+    let w = Number(document.getElementById("width").value);
+    let h = Number(document.getElementById("height").value);
+
+    if (w <= 0 || h <= 0) {
+      document.getElementById("result").textContent = "Please enter positive values!";
+      return;
+    }
+
+    let r = new Rectangle(w, h);
+    document.getElementById("result").textContent = "Area = " + r.area();
+  }
+</script>
+
+</body>
+</html>

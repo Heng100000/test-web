@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shopping</title>
+<style>
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #eef2f7;
+    display: flex;
+    justify-content: center;
+    padding: 50px;
+  }
+
+  .container {
+    background: #ffffff;
+    padding: 30px 25px;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    width: 650px; 
+    text-align: center;
+  }
+
+  h3 {
+    color: #1e72fa;
+    margin-bottom: 20px;
+    font-weight: 700;
+    font-size: 30px;
+  }
+
+  .input-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+  }
+
+  .input-row input {
+    width: 30%;
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #a6c8ff;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: 0.3s;
+  }
+
+  .input-row input:focus {
+    border-color: #4d8bed;
+    box-shadow: 0 0 5px rgba(77,139,237,0.3);
+  }
+
+  button {
+    width: 30%;
+    padding: 12px;
+    margin-bottom: 20px;
+    background: #4d8bed;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  button:hover {
+    background: #3766b0;
+    transform: translateY(-2px);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+  }
+
+  th, td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+  }
+
+  th {
+    background: #4d8bed; 
+    color: white;
+    font-weight: bold;
+  }
+
+  tbody tr:nth-child(even) {
+    background: #f0f4ff;
+  }
+
+  .total-box {
+    margin-top: 20px;
+    background: #cce4ff;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #225fa4;
+    border: 1px solid #99c2ff;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h3>Products</h3>
+
+    <div class="input-row">
+        <input type="text" id="nameInput" placeholder="Product Name">
+        <input type="number" id="priceInput" placeholder="Price">
+        <input type="number" id="discountInput" placeholder="Discount %">
+    </div>
+
+    <button id="addBtn">Add Product</button>
+
+    <table id="productTable">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Product Name</th>
+          <th>Price ($)</th>
+          <th>Discount (%)</th>
+          <th>Final Price ($)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Products will appear here -->
+      </tbody>
+    </table>
+
+    <div id="total" class="total-box">Total = $0</div>
+</div>
+
+<script>
+class Product {
+  constructor(name, price, discount) {
+    this.name = name;
+    this.price = price;
+    this.discount = discount;
+  }
+
+  getFinalPrice() {
+    return this.price * (1 - this.discount / 100);
+  }
+}
+
+const cart = [];
+
+const nameInput = document.getElementById('nameInput');
+const priceInput = document.getElementById('priceInput');
+const discountInput = document.getElementById('discountInput');
+const addBtn = document.getElementById('addBtn');
+
+addBtn.addEventListener('click', () => {
+  const name = nameInput.value.trim();
+  const price = parseFloat(priceInput.value.trim());
+  const discount = parseFloat(discountInput.value.trim()) || 0;
+
+  if (!name || isNaN(price)) {
+    alert("Please enter valid product name and price.");
+    return;
+  }
+
+  const product = new Product(name, price, discount);
+  cart.push(product);
+
+  nameInput.value = '';
+  priceInput.value = '';
+  discountInput.value = '';
+
+  updateTable();
+});
+
+function updateTable() {
+  const tbody = document.querySelector("#productTable tbody");
+  tbody.innerHTML = '';
+
+  cart.forEach((p, index) => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${index + 1}</td>
+      <td>${p.name}</td>
+      <td>${p.price.toFixed(2)}</td>
+      <td>${p.discount.toFixed(0)}</td>
+      <td>${p.getFinalPrice().toFixed(2)}</td>
+    `;
+    tbody.appendChild(row);
+  });
+
+  const total = cart.reduce((sum, p) => sum + p.getFinalPrice(), 0);
+  document.getElementById("total").textContent = "Total = $" + total.toFixed(2);
+}
+</script>
+
+</body>
+</html>
