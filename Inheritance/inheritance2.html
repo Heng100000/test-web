@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Shapes</h1>
+    <button id="btn-rectangle">Rectangle Area</button>
+    <button id="btn-circle">Circle Area</button>
+    <div class="output" id="output"></div>
+
+    <script>
+        class Shape {
+            constructor(name) {
+                this.name = name;
+            }
+
+            describe() {
+                return 'This is a ' + this.name + '.';
+            }
+        }
+
+        class Rectangle extends Shape {
+            constructor(width, height) {
+                super('Rectangle');
+                this.width = width;
+                this.height = height;
+            }
+
+            area() {
+                return this.width * this.height;
+            }
+
+            describe() {
+                const base = super.describe();
+                return base + ' Its area is ' + this.area().toFixed(2) + '.';
+            }
+        }
+
+        class Circle extends Shape {
+            constructor(redius) {
+                super('Circle');
+                this.redius = redius;
+            }
+
+            area() {
+                return Math.PI * this.redius * this.redius;
+            }
+
+            describe() {
+                const base = super.describe();
+                return base + ' Its area is ' + this.area().toFixed(2) + '.';
+            }
+        }
+
+        const output = document.getElementById('output');
+        const btnRectangle = document.getElementById('btn-rectangle');
+        const btnCircle = document.getElementById('btn-circle');
+
+        btnRectangle.addEventListener('click', function() {
+            const rect = new Rectangle(10, 20);
+            output.textContent = rect.describe();
+        });
+
+        btnCircle.addEventListener('click', function() {
+            const circle = new Circle(5);
+            output.textContent = circle.describe();
+        });
+    </script>
+</body>
+</html>

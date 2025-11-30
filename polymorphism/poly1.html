@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #canvas {
+            border: 1px solid #333;
+            margin-top: 10px;
+            padding: 10px;
+            min-height: 80px;
+            font-family: monospace;
+            white-space: pre;
+            background-color: #f8f8f8;
+        }
+    </style>
+</head>
+<body>
+    <h1>Shape Polymorphism</h1>
+    <button id="btn-draw">Draw All Shapes</button>
+    <div id="canvas"></div>
+
+    <script>
+        class Shape {
+            constructor(name) {
+                this.name = name;
+            }
+
+            draw() {
+                return 'Drawing ' + this.name;
+            }
+        }
+
+        class Rectangle extends Shape {
+            constructor(width, height) {
+                super('Rectangle');
+                this.width = width;
+                this.height = height;
+            }
+
+            draw() {
+                return 'Drawing ' + this.name + ' with width ' + this.width + ' and height ' + this.height;
+            }
+        }
+
+        class Circle extends Shape {
+            constructor(radius) {
+                super('Circle');
+                this.radius = radius;
+            }
+
+            draw() {
+                return 'Drawing ' + this.name + ' with radius ' + this.radius;
+            }
+        }
+
+        class Triangle extends Shape {
+            constructor(base, height) {
+                super('Triangle');
+                this.base = base;
+                this.height = height;
+            }
+
+            draw() {
+                return 'Drawing ' + this.name + ' with base ' + this.base + ' and height ' + this.height;
+            }
+        }
+
+        const shapes = [
+            new Rectangle(10, 20),
+            new Circle(5),
+            new Triangle(10, 20),
+            new Rectangle(15, 30)
+        ];
+
+        const btn = document.getElementById('btn-draw');
+        const canvas = document.getElementById('canvas');
+
+        btn.addEventListener('click', function() {
+            let output = '';
+            for(const shape of shapes) {
+                output += shape.draw() + '\n';
+            }
+            canvas.textContent = output;
+        });
+    </script>
+</body>
+</html>
