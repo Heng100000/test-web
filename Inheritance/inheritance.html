@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+
+        .output {
+            border: 1px solid black;
+            padding: 10px;
+            margin-top: 10px;
+            min-height: 40px;
+        }
+    </style>
+
+</head>
+<body>
+    <h1>Animals Speaking</h1>
+    <button id="btn-dog">Make Dog Speak</button>
+    <button id="btn-cat">Make Cat Speak</button>
+    <div class="output" id="output"></div>
+
+    <script>
+        class Animal {
+            constructor(name) {
+                this.name = name;
+            }
+
+            speak() {
+                return "Animal Speaking";
+            }
+        }
+
+        class Dog extends Animal {
+            speak() {
+                return this.name + " is Barking";
+            }
+        }
+
+        class Cat extends Animal {
+            speak() {
+                return this.name + " is Meowing";
+            }
+        }
+
+        const output = document.getElementById("output");
+        const btnDog = document.getElementById("btn-dog");
+        const btnCat = document.getElementById("btn-cat");
+
+        btnDog.addEventListener("click", function() {
+            const dog = new Dog("Rex");
+            output.textContent = dog.speak();
+        });
+
+        btnCat.addEventListener("click", function() {
+            const cat = new Cat("Whiskers");
+            output.textContent = cat.speak();
+        });
+    </script>
+</body>
+</html>

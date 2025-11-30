@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+
+
+            .container {
+                display: flex;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+        }
+
+        .panel {
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            padding: 10px;
+            min-width: 260px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .summary {
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        .label-inline {
+            display: inline-block;
+            margin-right: 10px;
+            width: 90px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Staff Payroll</h1>
+    <p>
+        Different staff positions (Teacher, Manager, Intern) calculate salary, tax, and net pay in different ways,
+        but all share the same interface..
+    </p>
+
+    <div class="container">
+        <div class="panel">
+            <h2>Staff List</h2>
+            <table id="staff-table">
+                <thead>
+                    <tr>
+                        <th>Nmae</th>
+                        <th>Position</th>
+                        <th>Base Salary</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+            <div class="summary" id="total-summary">
+
+            </div>
+        </div>
+
+        <div class="panel">
+            <h2>Staff Details</h2>
+            <label for="staff-select" class="label-inline">Select:</label>
+            <Select id="staff-select"></Select>
+            <button id="btn-show">Show Payroll</button>
+
+            <div id="details" style="margin-top: 10px;">
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class StaffMember {
+            constructor(name, position, baseSalary) {
+                this.name = name;
+                this.position = position;
+                this.baseSalary = baseSalary;
+            }
+
+            getGrossSalary() {
+                return this.baseSalary;
+            }
+
+            getTaxSalary() {
+                const gross = this.getGrossSalary();
+                return gross * 0.1;
+            }
+
+            getNetSalary() {
+                const gross = this.getGrossSalary();
+                const tax = this.getTaxSalary();
+                return gross - tax;
+            }
+
+            getInfoObject() {
+                const gross = this.getGrossSalary();
+                const tax = this.getTaxSalary();
+                const net = this.getNetSalary();
+                return {
+                    name: this.name,
+                    position: this.position,
+                    baseSalary: this.baseSalary,
+                    grossSalary: gross,
+                    taxSalary: tax,
+                    netSalary: net
+                }
+            }
+        }
+
+        class Teacher extends StaffMember {
+            getGrossSalary() {
+                return this.baseSalary + 100;
+            }
+
+            getTaxSalary() {
+                const gross = this.getGrossSalary();
+                return gross * 0.2;
+            }
+        }
+
+        class Manager extends StaffMember {
+            getGrossSalary() {
+                return this.baseSalary * 0.2 + 150;
+            }
+
+            getTaxSalary() {
+                const gross = this.getGrossSalary();
+                return gross * 0.20;
+            }
+        }
+
+        class Intern extends StaffMember {
+            getTaxSalary() {
+                const gross = this.getGrossSalary();
+                return gross * 0.05;
+            }
+        }
+
+        const staffList = [
+            new Teacher("John", "Teacher", 1000),
+            new Manager("Jane", "Manager", 2000),
+            new Intern("Bob", "Intern", 500),
+            new Teacher("Jam", "Teacher", 1200),
+        ];
+
+        const staffTableBody = document.querySelector("#staff-table tbody");
+        // const staffTable = document.getElementById("staff-table");
+        const staffSelect = document.getElementById("staff-select");
+        const totalSummary = document.getElementById("total-summary");
+        const detailsDiv = document.getElementById("details");
+        const btnShow = document.getElementById("btn-show");
+
+        function renderStaffTable() {
+            staffTableBody.innerHTML = "";
+            for (const staff of staffList) {
+                const info = staff.getInfoObject();
+                const tr = document.createElement("tr");
+
+                const tdName = document.createElement('td');
+                tdName.textContent = info.name;
+
+                const tdPos = document.createElement('td');
+                tdPos.textContent = info.position;
+
+                const tdBase = document.createElement('td');
+                tdBase.textContent = info.baseSalary.toFixed(2);
+
+                tr.appendChild(tdName);
+                tr.appendChild(tdPos);
+                tr.appendChild(tdBase);
+
+                staffTableBody.appendChild(tr);
+            }
+        }
+
+        function renderStaffOptions() {
+            staffSelect.innerHTML = '';
+            staffList.forEach((staff, index) => {
+                const option = document.createElement('option');
+                option.value = index;
+                option.textContent = staff.name + ' (' + staff.position + ')';
+                staffSelect.appendChild(option);
+            });
+        }
+
+        function renderTotals() {
+            let totalGross = 0;
+            let totalNet = 0;
+
+            for (const staff of staffList) {
+                const info = staff.getInfoObject();
+                totalGross += info.grossSalary;
+                totalNet += info.netSalary;
+            }
+
+            totalSummary.textContent = `Total Gross: ${totalGross.toFixed(2)}, Total Net: ${totalNet.toFixed(2)}`;
+        }
+
+        function showSelectedStaffDetails() {
+            const index = parseInt(staffSelect.value, 10);
+            const staff = staffList[index];
+            const info = staff.getInfoObject();
+
+            detailsDiv.innerHTML = `
+                <div><strong>Name:</strong> ${info.name}</div>
+                <div><strong>Position:</strong> ${info.position}</div>
+                <div><strong>Base Salary:</strong> ${info.baseSalary.toFixed(2)}</div>
+                <div><strong>Gross Salary:</strong> ${info.grossSalary.toFixed(2)}</div>
+                <div><strong>Tax Salary:</strong> ${info.taxSalary.toFixed(2)}</div>
+                <div><strong>Net Salary:</strong> ${info.netSalary.toFixed(2)}</div>
+            `;
+        }
+
+        btnShow.addEventListener('click', showSelectedStaffDetails);
+
+        renderStaffTable();
+        renderStaffOptions();
+        renderTotals();
+
+        showSelectedStaffDetails();
+    </script>
+</body>
+
+</html>
