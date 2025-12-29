@@ -277,7 +277,7 @@
         text-decoration: underline;
     }
 
-    a.btn {
+    .btn {
         margin-top: 4px;
         padding: 12px 14px;
         border: none;
@@ -289,18 +289,14 @@
         background: linear-gradient(135deg, var(--accent2), var(--accent1));
         box-shadow: 0 16px 34px rgba(0,0,0,.30);
         transition: transform .15s ease, filter .15s ease;
-        text-decoration: none;
-        text-align: center;
     }
 
-    
-
-    a.btn:hover {
+    .btn:hover {
         transform: translateY(-2px);
         filter: brightness(1.05);
     }
 
-    a.btn:active {
+    .btn:active {
         transform: translateY(2px);
         filter: brightness(.95);
     }
@@ -424,74 +420,10 @@
                                 <a href="#">Forgot password?</a>
                             </div>
 
-                            <a href="store/pos.html" class="btn">Login</a>
+                            <button class="btn" type="submit">Login</button>
                         </form>
 
                         <div class="divider">or continue with</div>
-
-                        <div class="social" aria-label="social login buttons">
-                            <button class="sbtn" type="button">Google</button>
-                            <button class="sbtn" type="button">Facebook</button>
-                            <button class="sbtn" type="button">Twitter</button>
-                        </div>
-                    </div>
-
-                    <div class="panel register" id="panel-register" role="tabpanel">
-                        <h2>Create Account</h2>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni provident et ut neque voluptates modi!</p>
-
-                        <form action="#" method="post">
-                            <div class="row">
-                                <div class="field">
-                                    <label for="reg-firstname">First Name</label>
-                                    <div class="input">
-                                        <input type="text" id="reg-firstname" placeholder="heng" autocomplete="given-name" required>
-                                    </div>
-                                </div>
-
-                                <div class="field">
-                                    <label for="reg-lastname">Last Name</label>
-                                    <div class="input">
-                                        <input type="text" id="reg-lastname" placeholder="sok" autocomplete="family-name" required>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="field">
-                                <label for="reg-email">Email</label>
-                                <div class="input">
-                                    <input type="email" id="reg-email" placeholder="eample@gmail.com" autocomplete="email" required>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="field">
-                                    <label for="reg-password">Password</label>
-                                    <div class="input">
-                                        <input type="password" id="reg-password" placeholder="Password" autocomplete="new-password" required>
-                                    </div>
-                                </div>
-
-                                <div class="field">
-                                    <label for="reg-confirm">Confirm Password</label>
-                                    <div class="input">
-                                        <input type="password" id="reg-confirm" placeholder="Password" autocomplete="new-password" required>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="meta">
-                                <label for="check">
-                                    <input type="checkbox">
-                                    I agree to Terms
-                                </label>
-                                <a href="#">Privacy Policy</a>
-                            </div>
-
-                            <a href="#" class="btn" type="submit">Register</a>
-                        </form>
-
-                        <div class="divider">or sign up with</div>
 
                         <div class="social" aria-label="social login buttons">
                             <button class="sbtn" type="button">Google</button>
