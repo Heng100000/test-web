@@ -127,6 +127,10 @@
       flex: 0 0 10px;
     }
 
+    /* Status Colors */
+    .status-open .dot { background: var(--accent2); box-shadow: 0 0 0 4px rgba(34,197,94, 0.2); }
+    .status-closed .dot { background: var(--danger); box-shadow: 0 0 0 4px rgba(251,113,133, 0.2); }
+
     /* Sidebar */
     .sidebar{
       display:flex;
@@ -135,10 +139,63 @@
     }
     .side-body{
       padding: 14px;
-      display:grid;
-      gap: 12px;
+      display:flex; /* Changed to Flex to pin profile to bottom */
+      flex-direction: column;
+      gap: 10px;
       overflow:auto;
+      flex: 1;
     }
+
+    /* Profile Section (New) */
+    .profile-section {
+      margin-top: auto; /* Pushes to bottom */
+      padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,.10);
+    }
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .avatar {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #6366f1, #a855f7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      border: 2px solid rgba(255,255,255,0.2);
+    }
+    .user-info b {
+      display: block;
+      font-size: 14px;
+      color: var(--text);
+    }
+    .user-info span {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .logout-btn {
+      width: 100%;
+      padding: 8px;
+      border-radius: 10px;
+      border: 1px solid rgba(251,113,133,0.3);
+      background: rgba(251,113,133,0.1);
+      color: var(--danger);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      transition: .2s;
+    }
+    .logout-btn:hover {
+      background: var(--danger);
+      color: white;
+    }
+
     .navbtn{
       display:flex;
       align-items:center;
@@ -156,8 +213,14 @@
       background: rgba(255,255,255,.09);
       border-color: rgba(255,255,255,.16);
     }
+    .navbtn.active {
+      background: linear-gradient(135deg, rgba(56,189,248,0.2), rgba(34,197,94,0.15));
+      border-color: var(--accent);
+      color: var(--accent);
+    }
     .navbtn b{ font-size: 14px; }
     .navbtn span{ color: var(--muted); font-size: 12.5px; }
+    .navbtn.active span { color: var(--accent); }
 
     .kv{
       display:grid;
@@ -240,6 +303,10 @@
       border: 1px solid rgba(255,255,255,.14);
       box-shadow: none;
     }
+    .btn.danger{
+      background: linear-gradient(135deg, var(--danger), #ef4444);
+      color: white;
+    }
 
     .product-grid{
       padding: 20px;
@@ -249,6 +316,13 @@
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
       gap: 18px;
       align-content: start;
+      transition: opacity 0.3s ease;
+    }
+
+    .store-closed {
+      opacity: 0.4;
+      pointer-events: none;
+      filter: grayscale(100%);
     }
 
     .product-card {
@@ -258,6 +332,7 @@
       padding: 16px;
       cursor: pointer;
       transition: all .2s ease;
+      user-select: none;
     }
 
     .product-card:hover {
@@ -302,17 +377,94 @@
       margin-top: 4px;
     }
 
-    /* Card Panel */
+    /* Cart Panel */
     .cart {
-      flex: 1;
-      flex-direction: column;
-      min-height: 0;
+      flex: 1; 
+      display: flex;
+      flex-direction: column; 
+      height: 100%; 
+      min-height: 0; 
     }
 
     .cart-body {
-      flex: 1;
+      flex: 1; 
+      overflow-y: auto; 
       padding: 16px;
-      overflow: auto;
+      min-height: 0; 
+    }
+
+    .cart-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .cart-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 12px;
+      padding: 10px;
+      animation: slideIn 0.2s ease;
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .cart-item-icon {
+      font-size: 32px;
+    }
+    .cart-item-details {
+      flex: 1;
+    }
+    .cart-item-title {
+      font-weight: 700;
+      font-size: 13px;
+      margin-bottom: 2px;
+    }
+    .cart-item-price {
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .cart-controls {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+    }
+    .qty-btn-group {
+      display: flex;
+      background: rgba(0,0,0,.2);
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.05);
+    }
+    .qty-btn {
+      width: 24px;
+      height: 24px;
+      border: none;
+      background: transparent;
+      color: var(--text);
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .qty-btn:hover { background: rgba(255,255,255,.1); }
+    .qty-display {
+      width: 30px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 24px;
+    }
+    .cart-item-total {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent2);
     }
 
     .cart-empty {
@@ -334,9 +486,11 @@
     }
 
     .cart-footer {
+      flex-shrink: 0; 
       padding: 16px;
       border-top: 1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.05);
+      z-index: 5;
     }
 
     .cart-total {
@@ -366,14 +520,153 @@
       background-clip: text;
     }
 
+    /* --- MODAL STYLES --- */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: none; 
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+      opacity: 1;
+    }
+
+    .modal {
+      width: 400px;
+      max-width: 90%;
+      transform: scale(0.95);
+      transition: transform 0.3s ease;
+    }
+
+    .modal-overlay.open .modal {
+      transform: scale(1);
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    .form-input, .form-select {
+      width: 100%;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.25);
+      color: var(--text);
+      font-family: inherit;
+      outline: none;
+      transition: .2s;
+    }
+
+    .form-input:focus, .form-select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(56,189,248,.1);
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .receipt-preview {
+      background: rgba(0,0,0,0.2);
+      border: 1px dashed rgba(255,255,255,0.2);
+      padding: 16px;
+      border-radius: 12px;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 13px;
+      color: #d1d5db;
+      max-height: 200px;
+      overflow-y: auto;
+      margin-bottom: 16px;
+    }
+    
+    .receipt-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+    
+    .receipt-divider {
+      border-bottom: 1px dashed rgba(255,255,255,0.2);
+      margin: 8px 0;
+    }
+
+    .payment-methods {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    
+    .payment-method {
+      padding: 12px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.05);
+      border-radius: 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: .2s;
+    }
+    
+    .payment-method:hover, .payment-method.active {
+      background: rgba(56,189,248,.15);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* --- LOCK SCREEN (NEW) --- */
+    .lock-screen {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(11, 18, 32, 0.95);
+      backdrop-filter: blur(15px);
+      z-index: 9999;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--text);
+    }
+    .lock-screen.open {
+      display: flex;
+    }
+    .lock-content {
+      text-align: center;
+      width: 300px;
+    }
+    .lock-icon {
+      font-size: 60px;
+      margin-bottom: 20px;
+    }
+    .lock-title {
+      font-size: 24px;
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+
     @media (max-width: 980px) {
-      .search {
-        min-width: 200px;
-      }
-      .btn {
-        padding: 11px 14px;
-        font-size: 13px;
-      }
+      .search { min-width: 200px; }
+      .btn { padding: 11px 14px; font-size: 13px; }
       .product-grid {
         grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
         gap: 12px;
@@ -382,27 +675,11 @@
     }
 
     @media (max-width: 640px) {
-      .app {
-        padding: 10px;
-        gap: 10px;
-      }
-      .main-top {
-        padding: 10px;
-        gap: 8px;
-      }
-      .search input {
-        padding: 12px 40px 12px 40px;
-        font-size: 13px;
-      }
-      .search-icon {
-        width: 18px;
-        height: 18px;
-        left: 12px;
-      }
-      .btn {
-        padding: 1opx 12px;
-        font-size: 12.5px;
-      }
+      .app { padding: 10px; gap: 10px; }
+      .main-top { padding: 10px; gap: 8px; }
+      .search input { padding: 12px 40px 12px 40px; font-size: 13px; }
+      .search-icon { width: 18px; height: 18px; left: 12px; }
+      .btn { padding: 1opx 12px; font-size: 12.5px; }
     }
     </style>
   </head>
@@ -415,16 +692,15 @@
             <span class="logo" aria-hidden="false"></span>
             <div>
               <div>POS Store</div>
-              <div class="muted"
-                style="font-size: 12.5px; font-weight: 650;">Counter
-                #01</div>
+              <div class="muted" style="font-size: 12.5px; font-weight: 650;">Counter #01</div>
             </div>
           </div>
-          <span class="pill"><span class="dot"></span> Online</span>
+          <span class="pill status-open" id="storeStatusPill"><span class="dot"></span> <span id="storeStatusText">Online</span></span>
         </div>
 
         <div class="side-body">
-          <div class="navbtn">
+          <!-- New Sale Button -->
+          <div class="navbtn" onclick="newSale()">
             <div>
               <b>New Sale</b>
               <span>Start a fresh cart</span>
@@ -432,52 +708,63 @@
             <span class="pill">Ctrl + N</span>
           </div>
 
-          <div class="navbtn">
+          <!-- Category Menu -->
+          <div class="navbtn active" onclick="filterCategory('All', this)">
             <div>
-              <b>Customer</b>
-              <span>Find / add customer</span>
+              <b>All Products</b>
+              <span>View everything</span>
             </div>
-            <span class="pill">F2</span>
+            <span style="font-size: 18px;">📦</span>
           </div>
 
-          <div class="navbtn">
+          <div class="navbtn" onclick="filterCategory('Pizza', this)">
             <div>
-              <b>Orders</b>
-              <span>View today's receipts</span>
+              <b>Pizza</b>
+              <span>Italian slices</span>
             </div>
-            <span class="pill">F3</span>
+            <span style="font-size: 18px;">🍕</span>
           </div>
 
-          <div class="navbtn">
+          <div class="navbtn" onclick="filterCategory('Burger', this)">
             <div>
-              <b>Inventory</b>
-              <span>Stock & Products</span>
+              <b>Burger</b>
+              <span>Beef & Chicken</span>
             </div>
-            <span class="pill">F4</span>
+            <span style="font-size: 18px;">🍔</span>
+          </div>
+
+          <div class="navbtn" onclick="filterCategory('Drink', this)">
+            <div>
+              <b>Drinks</b>
+              <span>Soda, Juice, Water</span>
+            </div>
+            <span style="font-size: 18px;">🥤</span>
+          </div>
+
+          <div class="navbtn" onclick="filterCategory('Snack', this)">
+            <div>
+              <b>Snacks</b>
+              <span>Fries, Chips</span>
+            </div>
+            <span style="font-size: 18px;">🍟</span>
           </div>
 
           <div class="soft kv">
-            <div class="kvrow"><span>Cashier</span>
-              <b>Admin</b></div>
-            <div class="kvrow"><span>Shift</span>
-              <b>09:10:00-18:00</b></div>
-            <div class="kvrow"><span>Store</span> <b>Main
-                Brand</b></div>
+            <div class="kvrow"><span>Cashier</span> <b>Admin</b></div>
+            <div class="kvrow"><span>Hours</span> <b>07:00 - 14:10</b></div>
+            <div class="kvrow"><span>Store</span> <b>Main Brand</b></div>
           </div>
 
-          <div class="soft kv">
-            <div class="kvrow"><span>Scanner</span>
-              <b>Ready</b></div>
-            <div class="kvrow"><span>Printer</span>
-              <b>Connected</b></div>
-            <div class="kvrow"><span>Drawer</span>
-              <b>Closed</b></div>
-          </div>
-
-          <div class="muted"
-            style="font-size: 12.5px; line-height: 1.6; padding: 0 4px;">
-            Tip: This is a static POS UI. Hook it to JS or backend
-            later.
+          <!-- PROFILE SECTION (Bottom) -->
+          <div class="profile-section">
+            <div class="profile-header">
+              <div class="avatar">👨‍💻</div>
+              <div class="user-info">
+                <b id="userNameDisplay">Admin User</b>
+                <span>Manager</span>
+              </div>
+            </div>
+            <button class="logout-btn" onclick="handleLogout()">🔒 Logout</button>
           </div>
         </div>
       </aside>
@@ -486,103 +773,536 @@
       <main class="main glass" aria-label="Products">
         <div class="titlebar">
           <div style="display: flex; align-items: center; gap: 10px;">
-            <div style="font-weight: 900;">
-              Products
-            </div>
-            <span class="pill"><span class="dot"></span>Dec 29,
-              2025</span>
+            <div style="font-weight: 900;">Products</div>
+            <span class="pill" id="categoryBadge">All Items</span>
           </div>
         </div>
         <div class="main-top">
           <div class="search">
-            <svg viewBox="0 0 24 24" fill="none"
-              aria-hidden="true">
-              <path
-                d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z"
-                stroke="currentColor" stroke-width="2"
-                opacity=".9" />
-              <path d="M16.5 16.5 21 21" stroke="currentColor"
-                stroke-width="2" stroke-linecap="round"
-                opacity=".9" />
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor" stroke-width="2" opacity=".9" />
+              <path d="M16.5 16.5 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".9" />
             </svg>
-            <input type="search"
-              placeholder="Search by name, scan barcode....">
+            <input type="search" id="searchInput" placeholder="Search by name...">
           </div>
           <button class="btn ghost" type="button">Scan</button>
-          <button class="btn" type="button">Add Product</button>
+          <button class="btn" type="button" onclick="openAddProductModal()">Add Product</button>
         </div>
 
-        <!-- // Product Grid -->
-        <div class="product-grid">
-          <div class="product-card">
-            <div class="product-image">🥤</div>
-            <div class="product-name">Coca-Cola 330ml</div>
-            <div class="product-price">$1.99</div>
-            <div class="product-stock">In Stock: 500</div>
-          </div>
-
-          <div class="product-card">
-            <div class="product-image">🍫</div>
-            <div class="product-name">Chocolate Bar</div>
-            <div class="product-price">$2.99</div>
-            <div class="product-stock">In Stock: 145</div>
-          </div>
-
-          <div class="product-card">
-            <div class="product-image">🍞</div>
-            <div class="product-name">White Bread</div>
-            <div class="product-price">$3.99</div>
-            <div class="product-stock">In Stock: 100</div>
-          </div>
-
-          <div class="product-card">
-            <div class="product-image">🥛</div>
-            <div class="product-name">Fresh Milk 1L</div>
-            <div class="product-price">$1.99</div>
-            <div class="product-stock">In Stock: 200</div>
-          </div>
-
-          <div class="product-card">
-            <div class="product-image">🍎</div>
-            <div class="product-name">Red Apple (Kg)</div>
-            <div class="product-price">$1.99</div>
-            <div class="product-stock">In Stock: 200</div>
-          </div>
-
-          <div class="product-card">
-            <div class="product-image">🧃</div>
-            <div class="product-name">Orange Juice</div>
-            <div class="product-price">$1.99</div>
-            <div class="product-stock">In Stock: 200</div>
-          </div>
+        <!-- Product Grid -->
+        <div class="product-grid" id="productGrid">
+          <!-- Products injected by JS -->
         </div>
       </main>
 
       <!-- Cart Panel -->
-      <aside class="card glass" aria-label="Shopping Card">
+      <aside class="cart glass" aria-label="Shopping Card">
         <div class="titlebar">
           <div style="font-weight: 900;">Shopping Cart</div>
-          <span class="pill">0 Items</span>
+          <span class="pill" id="cartCountBadge">0 Items</span>
         </div>
 
-        <div class="cart-body">
+        <div class="cart-body" id="cartBody">
+          <!-- Cart items injected here -->
           <div class="cart-empty">
             <div class="cart-empty-icon">🛒</div>
-            <div>
-              <b>Cart is empty</b>
-              <span>Add Product to start a sale</span>
-            </div>
+            <div><b>Cart is empty</b><span>Add Product to start a sale</span></div>
           </div>
         </div>
 
         <div class="cart-footer">
           <div class="cart-total">
             <div class="cart-total-label">Total</div>
-            <div class="cart-total-amount">$0.00</div>
+            <div class="cart-total-amount" id="cartTotalAmount">$0.00</div>
           </div>
-          <button class="btn" type="button" style="width: 100%;">💳 Checkout Now</button>
+          <button class="btn" type="button" style="width: 100%;" onclick="openCheckoutModal()">💳 Checkout Now</button>
         </div>
       </aside>
     </div>
+
+    <!-- ADD PRODUCT MODAL -->
+    <div class="modal-overlay" id="addProductModal">
+      <div class="glass modal" style="padding: 24px;">
+        <div class="titlebar" style="padding: 0 0 16px 0; border: none;">
+          <div style="font-weight: 900; font-size: 20px;">Add New Product</div>
+        </div>
+        
+        <form id="addProductForm">
+          <div class="form-group">
+            <label class="form-label">Product Name</label>
+            <input type="text" class="form-input" id="newProductName" required placeholder="e.g. Pepperoni Pizza">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Category</label>
+            <select class="form-select" id="newProductCategory">
+              <option value="Pizza">Pizza</option>
+              <option value="Burger">Burger</option>
+              <option value="Drink">Drink</option>
+              <option value="Snack">Snack</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Price ($)</label>
+            <input type="number" step="0.01" class="form-input" id="newProductPrice" required placeholder="0.00">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Stock Qty</label>
+            <input type="number" class="form-input" id="newProductStock" required placeholder="100">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Icon</label>
+            <select class="form-select" id="newProductIcon">
+              <option value="🥤">🥤 Drink</option>
+              <option value="🍔">🍔 Burger</option>
+              <option value="🍟">🍟 Fries</option>
+              <option value="🍕">🍕 Pizza</option>
+              <option value="🍩">🍩 Donut</option>
+              <option value="🍎">🍎 Fruit</option>
+              <option value="🥩">🥩 Meat</option>
+              <option value="🥦">🥦 Veggie</option>
+              <option value="📦">📦 Box</option>
+            </select>
+          </div>
+
+          <div class="modal-actions">
+            <button type="button" class="btn ghost" onclick="closeAddProductModal()">Cancel</button>
+            <button type="submit" class="btn">Save Product</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- CHECKOUT MODAL -->
+    <div class="modal-overlay" id="checkoutModal">
+      <div class="glass modal" style="padding: 24px;">
+        <div class="titlebar" style="padding: 0 0 16px 0; border: none;">
+          <div style="font-weight: 900; font-size: 20px;">Confirm Payment</div>
+        </div>
+        
+        <div class="receipt-preview" id="receiptPreview">
+          <!-- Receipt items injected via JS -->
+        </div>
+
+        <label class="form-label">Select Payment Method</label>
+        <div class="payment-methods">
+          <div class="payment-method active" onclick="selectPaymentMethod(this, 'Cash')">💵 Cash</div>
+          <div class="payment-method" onclick="selectPaymentMethod(this, 'Card')">💳 Card</div>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn ghost" onclick="closeCheckoutModal()">Cancel</button>
+          <button type="button" class="btn" id="confirmPaymentBtn" onclick="processPayment()">Pay Now</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- LOCK SCREEN (New Overlay) -->
+    <div class="lock-screen" id="lockScreen">
+      <div class="lock-content glass" style="padding: 30px;">
+        <div class="lock-icon">🔒</div>
+        <div class="lock-title">System Locked</div>
+        <div style="margin-bottom: 20px; color: var(--muted);">Please login to continue</div>
+        
+        <form id="loginForm" onsubmit="handleLogin(event)">
+          <div class="form-group">
+            <input type="text" class="form-input" placeholder="Enter Username..." required>
+          </div>
+          <button type="submit" class="btn" style="width: 100%;">Login</button>
+        </form>
+      </div>
+    </div>
   </body>
+
+  <script>
+      // 1. Default Product Data
+      const defaultProducts = [
+        { id: 1, name: "Coca-Cola 330ml", category: "Drink", price: 1.99, stock: 500, icon: "🥤" },
+        { id: 2, name: "Chocolate Bar", category: "Snack", price: 2.99, stock: 145, icon: "🍫" },
+        { id: 3, name: "White Bread", category: "Snack", price: 3.99, stock: 100, icon: "🍞" },
+        { id: 4, name: "Fresh Milk 1L", category: "Drink", price: 1.99, stock: 200, icon: "🥛" },
+        { id: 5, name: "Red Apple (Kg)", category: "Snack", price: 1.99, stock: 200, icon: "🍎" },
+        { id: 6, name: "Orange Juice", category: "Drink", price: 1.99, stock: 200, icon: "🧃" },
+        { id: 7, name: "Cheese Burger", category: "Burger", price: 8.99, stock: 40, icon: "🍔" },
+        { id: 8, name: "Chicken Burger", category: "Burger", price: 7.50, stock: 35, icon: "🍔" },
+        { id: 9, name: "Pepperoni Pizza", category: "Pizza", price: 12.00, stock: 20, icon: "🍕" },
+        { id: 10, name: "Margherita Pizza", category: "Pizza", price: 10.50, stock: 25, icon: "🍕" },
+        { id: 11, name: "French Fries", category: "Snack", price: 3.49, stock: 120, icon: "🍟" },
+        { id: 12, name: "Iced Coffee", category: "Drink", price: 3.50, stock: 85, icon: "☕" }
+      ];
+
+      // 2. Configuration
+      const STORE_HOURS = {
+        open: { hour: 7, minute: 0 },   
+        close: { hour: 24, minute: 0 } 
+      };
+
+      // 3. Load Data
+      let products = JSON.parse(localStorage.getItem('pos_products')) || defaultProducts;
+      let cart = JSON.parse(localStorage.getItem('pos_cart')) || [];
+      let currentCategory = 'All';
+      let selectedPaymentMethod = 'Cash';
+      let isStoreOpen = true;
+      let isLoggedIn = true; // Default logged in
+      let currentUser = "Admin User";
+
+      // 4. Helper to Save Data
+      function saveData() {
+        localStorage.setItem('pos_products', JSON.stringify(products));
+        localStorage.setItem('pos_cart', JSON.stringify(cart));
+      }
+
+      // --- AUTH LOGIC (NEW) ---
+      window.handleLogout = function() {
+        if(confirm("Are you sure you want to logout? Current cart will be cleared.")) {
+          isLoggedIn = false;
+          cart = []; // Clear cart on logout
+          saveData();
+          updateCartUI();
+          
+          // Show Lock Screen
+          document.getElementById('lockScreen').classList.add('open');
+        }
+      }
+
+      window.handleLogin = function(e) {
+        e.preventDefault();
+        const usernameInput = e.target.querySelector('input').value;
+        if(usernameInput) {
+          currentUser = usernameInput;
+          isLoggedIn = true;
+          document.getElementById('userNameDisplay').innerText = currentUser;
+          document.getElementById('lockScreen').classList.remove('open');
+          e.target.reset();
+        }
+      }
+      // ---------------------------
+
+      // --- STORE TIME LOGIC ---
+      function checkStoreStatus() {
+        const now = new Date();
+        const currentHour = now.getHours();
+        const currentMinute = now.getMinutes();
+        
+        const currentTotal = currentHour * 60 + currentMinute;
+        const openTotal = STORE_HOURS.open.hour * 60 + STORE_HOURS.open.minute;
+        const closeTotal = STORE_HOURS.close.hour * 60 + STORE_HOURS.close.minute;
+
+        isStoreOpen = (currentTotal >= openTotal && currentTotal <= closeTotal);
+        updateStoreUI();
+      }
+
+      function updateStoreUI() {
+        const statusPill = document.getElementById('storeStatusPill');
+        const statusText = document.getElementById('storeStatusText');
+        const productGrid = document.getElementById('productGrid');
+
+        if (isStoreOpen) {
+          statusPill.className = 'pill status-open';
+          statusText.innerText = "Online";
+          productGrid.classList.remove('store-closed');
+        } else {
+          statusPill.className = 'pill status-closed';
+          statusText.innerText = "Closed";
+          productGrid.classList.add('store-closed');
+        }
+      }
+      setInterval(checkStoreStatus, 60000); 
+
+      // DOM Elements
+      const productGrid = document.getElementById('productGrid');
+      const cartBody = document.getElementById('cartBody');
+      const cartTotalAmount = document.getElementById('cartTotalAmount');
+      const cartCountBadge = document.getElementById('cartCountBadge');
+      const searchInput = document.getElementById('searchInput');
+      const categoryBadge = document.getElementById('categoryBadge');
+      
+      const addProductModal = document.getElementById('addProductModal');
+      const addProductForm = document.getElementById('addProductForm');
+      const checkoutModal = document.getElementById('checkoutModal');
+      const receiptPreview = document.getElementById('receiptPreview');
+      const confirmPaymentBtn = document.getElementById('confirmPaymentBtn');
+
+      // 6. Render Products Function
+      function renderProducts(list) {
+        if (list.length === 0) {
+          productGrid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--muted); padding: 40px;">No products found in this category.</div>`;
+          return;
+        }
+
+        productGrid.innerHTML = list.map(p => `
+          <div class="product-card" onclick="addToCart(${p.id})">
+            <div class="product-image">${p.icon}</div>
+            <div class="product-name">${p.name}</div>
+            <div class="product-price">$${p.price.toFixed(2)}</div>
+            <div class="product-stock">In Stock: ${p.stock}</div>
+          </div>
+        `).join('');
+      }
+
+      // 7. Filter Logic
+      function getFilteredProducts() {
+        let filtered = products;
+
+        if (currentCategory !== 'All') {
+          filtered = filtered.filter(p => p.category === currentCategory);
+        }
+
+        const term = searchInput.value.toLowerCase();
+        if (term) {
+          filtered = filtered.filter(p => p.name.toLowerCase().includes(term));
+        }
+
+        return filtered;
+      }
+
+      function applyFilters() {
+        renderProducts(getFilteredProducts());
+      }
+
+      window.filterCategory = function(category, element) {
+        currentCategory = category;
+        
+        categoryBadge.innerText = category === 'All' ? 'All Items' : category;
+
+        document.querySelectorAll('.navbtn').forEach(btn => btn.classList.remove('active'));
+        if(element) element.classList.add('active');
+
+        searchInput.value = '';
+
+        applyFilters();
+      }
+
+      searchInput.addEventListener('input', applyFilters);
+
+      // 10. Add to Cart Logic
+      window.addToCart = function(id) {
+        // 1. Check Auth
+        if (!isLoggedIn) {
+          alert("System Locked! Please Login.");
+          return;
+        }
+        // 2. Check Time
+        if (!isStoreOpen) {
+          alert(`Store is closed! \nWe are open from 07:00 AM to 14:10 PM.`);
+          return;
+        }
+
+        const product = products.find(p => p.id === id);
+        if (!product) {
+          alert("Product not found");
+          return;
+        }
+        if (product.stock <= 0) {
+          alert("Out of stock!");
+          return;
+        }
+
+        const existingItem = cart.find(item => item.id === id);
+
+        if (existingItem) {
+          if(existingItem.qty < product.stock) {
+            existingItem.qty +=1;
+          } else {
+            alert("Not enough stock!");
+            return;
+          }
+        } else {
+          cart.push({ ...product, qty: 1 });
+        }
+        
+        saveData();
+        updateCartUI();
+      };
+
+      window.changeQty = function(id, change) {
+        const item = cart.find(i => i.id === id);
+        if (!item) return;
+
+        item.qty += change;
+
+        if (item.qty <= 0) {
+          cart = cart.filter(i => i.id !== id);
+        }
+
+        saveData();
+        updateCartUI();
+      };
+
+      window.newSale = function() {
+        if(cart.length > 0 && confirm("Start a new sale? Current cart will be cleared.")) {
+          cart = [];
+          saveData();
+          updateCartUI();
+        } else if (cart.length === 0) {
+          cart = [];
+          saveData();
+          updateCartUI();
+        }
+      }
+
+      function updateCartUI() {
+        const totalQty = cart.reduce((acc, item) => acc + item.qty, 0);
+        const totalPrice = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+
+        cartCountBadge.innerText = `${totalQty} Items`;
+        cartTotalAmount.innerText = `$${totalPrice.toFixed(2)}`;
+
+        if (cart.length === 0) {
+          cartBody.innerHTML = `
+            <div class="cart-empty">
+              <div class="cart-empty-icon">🛒</div>
+              <div><b>Cart is empty</b><span>Add Product to start a sale</span></div>
+            </div>`;
+        } else {
+          cartBody.innerHTML = `<div class="cart-list">
+            ${cart.map(item => `
+              <div class="cart-item">
+                <div class="cart-item-icon">${item.icon}</div>
+                <div class="cart-item-details">
+                  <div class="cart-item-title">${item.name}</div>
+                  <div class="cart-item-price">$${item.price.toFixed(2)} each</div>
+                </div>
+                <div class="cart-controls">
+                  <div class="cart-item-total">$${(item.price * item.qty).toFixed(2)}</div>
+                  <div class="qty-btn-group">
+                    <button class="qty-btn" onclick="changeQty(${item.id}, -1)">-</button>
+                    <div class="qty-display">${item.qty}</div>
+                    <button class="qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
+                  </div>
+                </div>
+              </div>
+            `).join('')}
+          </div>`;
+        }
+      }
+
+      // --- CHECKOUT LOGIC ---
+      
+      window.openCheckoutModal = function() {
+        if (cart.length === 0) {
+          alert("Cart is empty! Add items before checking out.");
+          return;
+        }
+
+        const subtotal = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+        const taxRate = 0.10; 
+        const tax = subtotal * taxRate;
+        const total = subtotal + tax;
+        const date = new Date().toLocaleString();
+
+        let receiptHTML = `
+          <div style="text-align:center; margin-bottom:10px; font-weight:bold;">POS STORE RECEIPT</div>
+          <div style="text-align:center; font-size:11px; margin-bottom:10px;">${date}</div>
+          <div class="receipt-divider"></div>
+        `;
+
+        cart.forEach(item => {
+          receiptHTML += `
+            <div class="receipt-row">
+              <span>${item.name} x${item.qty}</span>
+              <span>$${(item.price * item.qty).toFixed(2)}</span>
+            </div>
+          `;
+        });
+
+        receiptHTML += `
+          <div class="receipt-divider"></div>
+          <div class="receipt-row">
+            <span>Subtotal</span>
+            <span>$${subtotal.toFixed(2)}</span>
+          </div>
+          <div class="receipt-row">
+            <span>Tax (10%)</span>
+            <span>$${tax.toFixed(2)}</span>
+          </div>
+          <div class="receipt-row" style="font-weight:bold; font-size:15px; margin-top:5px;">
+            <span>TOTAL</span>
+            <span>$${total.toFixed(2)}</span>
+          </div>
+        `;
+
+        receiptPreview.innerHTML = receiptHTML;
+        checkoutModal.classList.add('open');
+      };
+
+      window.closeCheckoutModal = function() {
+        checkoutModal.classList.remove('open');
+        confirmPaymentBtn.innerText = "Pay Now";
+        confirmPaymentBtn.disabled = false;
+      };
+
+      window.selectPaymentMethod = function(element, method) {
+        selectedPaymentMethod = method;
+        document.querySelectorAll('.payment-method').forEach(el => el.classList.remove('active'));
+        element.classList.add('active');
+      };
+
+      window.processPayment = function() {
+        confirmPaymentBtn.innerText = "Processing...";
+        confirmPaymentBtn.disabled = true;
+
+        setTimeout(() => {
+          cart.forEach(cartItem => {
+            const product = products.find(p => p.id === cartItem.id);
+            if(product) {
+              product.stock -= cartItem.qty;
+            }
+          });
+
+          cart = [];
+          saveData(); 
+          updateCartUI();
+          applyFilters();
+
+          closeCheckoutModal();
+          
+          alert(`Payment Successful via ${selectedPaymentMethod}! Thank you.`);
+        }, 1500);
+      };
+
+      // --- ADD PRODUCT LOGIC ---
+      window.openAddProductModal = function() {
+        addProductModal.classList.add('open');
+      }
+
+      window.closeAddProductModal = function() {
+        addProductModal.classList.remove('open');
+        addProductForm.reset(); 
+      }
+
+      addProductForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const name = document.getElementById('newProductName').value;
+        const category = document.getElementById('newProductCategory').value;
+        const price = parseFloat(document.getElementById('newProductPrice').value);
+        const stock = parseInt(document.getElementById('newProductStock').value);
+        const icon = document.getElementById('newProductIcon').value;
+
+        const newProduct = {
+          id: Date.now(), 
+          name,
+          category,
+          price,
+          stock,
+          icon
+        };
+
+        products.unshift(newProduct); 
+        saveData();
+        applyFilters();
+        closeAddProductModal();
+        
+        alert(`Product "${name}" added to ${category}!`);
+      });
+
+      // Initialize
+      checkStoreStatus();
+      updateCartUI();
+      applyFilters();
+    </script>
 </html>
