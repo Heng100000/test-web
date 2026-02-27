@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student List</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #f0f2f5; 
+    color: #333;
+  }
+
+  h2 {
+    text-align: center;
+    color: #252627;
+    margin-bottom: 20px;
+  }
+
+  .form-container {
+    width: 300px;
+    margin: 0 auto 20px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  input {
+    padding: 10px;
+    border: 1px solid #ccc; 
+    border-radius: 5px;
+    font-size: 14px;
+  }
+
+  input:focus {
+    border-color: #3498db; 
+    outline: none;
+    box-shadow: 0 0 5px rgba(52,152,219,0.3);
+  }
+
+  button {
+    padding: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #3498db; 
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+    outline: 2px solid #5dade2;
+  }
+
+  button:hover {
+    background-color: #2980b9;
+  }
+
+  table {
+    width: 50%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+  }
+
+  th {
+    background-color: #3498db;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    
+  }
+
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+
+  tr:hover {
+    background-color: #e8f0fe;
+  }
+</style>
+</head>
+<body>
+
+<h2>Student List</h2>
+
+<div class="form-container">
+  <input type="text" id="name" placeholder="Enter student name">
+  <input type="text" id="grade" placeholder="Enter grade">
+  <button onclick="addStudent()">Add Student</button>
+</div>
+
+<table id="studentTable">
+  <tr>
+    <th>No</th>
+    <th>Name</th>
+    <th>Grade</th>
+  </tr>
+</table>
+
+<script>
+class Student {
+  constructor(name, grade) {
+    this.name = name;
+    this.grade = grade;
+  }
+}
+
+class StudentList {
+  constructor() {
+    this.students = [];
+  }
+
+  addStudent(student) {
+    this.students.push(student);
+    this.showAll();
+  }
+
+  showAll() {
+    let table = document.getElementById("studentTable");
+    table.innerHTML = `
+      <tr>
+        <th>No</th>
+        <th>Name</th>
+        <th>Grade</th>
+      </tr>
+    `;
+
+    this.students.forEach((s, index) => {
+      let row = `
+        <tr>
+          <td>${index + 1}</td>
+          <td>${s.name}</td>
+          <td>${s.grade}</td>
+        </tr>
+      `;
+      table.innerHTML += row;
+    });
+  }
+}
+
+let list = new StudentList();
+
+function addStudent() {
+  let name = document.getElementById("name").value.trim();
+  let grade = document.getElementById("grade").value.trim();
+
+  if (name && grade) {
+    list.addStudent(new Student(name, grade));
+    document.getElementById("name").value = "";
+    document.getElementById("grade").value = "";
+  } else {
+    alert("Please enter both name and grade.");
+  }
+}
+</script>
+
+</body>
+</html>

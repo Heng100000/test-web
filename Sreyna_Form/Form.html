@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CRUD DATABASE</title>
+    <link rel="stylesheet" href="Form_style.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>CRUD Database</h1>
+
+      <form class="crud-form">
+        <div class="row-form">
+          <label for="id">ID:</label>
+          <input type="text" id="id" placeholder="Enter ID" />
+        </div>
+
+        <div class="row-form">
+          <label for="firstname">First Name:</label>
+          <input type="text" id="firstname" placeholder="Enter First Name" />
+        </div>
+
+        <div class="row-form">
+          <label for="lastname">Last Name:</label>
+          <input type="text" id="lastname" placeholder="Enter Last Name" />
+        </div>
+
+        <div class="row-form">
+          <label for="email">Email:</label>
+          <input type="email" id="email" placeholder="Enter Email" />
+        </div>
+
+        <div class="row-form">
+          <label for="phone">Phone Number:</label>
+          <input type="text" id="phone" placeholder="Enter Phone Number" />
+        </div>
+
+        <div class="row-form">
+          <label for="location">Location:</label>
+          <input type="text" id="location" placeholder="Enter Location" />
+        </div>
+
+        <div class="row-form">
+          <label for="hobby">Hobby:</label>
+          <input type="text" id="hobby" placeholder="Enter Hobby" />
+        </div>
+
+        <div class="buttons-form">
+          <button type="submit" class="add">Add Item</button>
+          <button type="reset" class="clear">Clear</button>
+        </div>
+
+      </form>
+      <table>
+        <thead>
+
+          <tr>
+            <th>ID</th>
+            <th>First</th>
+            <th>Last</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Location</th>
+            <th>Hobby</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>35</td>
+            <td>Jane</td>
+            <td>Smith</td>
+            <td>js@gmail.com</td>
+            <td>503-555-5555</td>
+            <td>Portland, Oregon</td>
+            <td>Photography</td>
+            <td>
+              <div class="action-buttons">
+                <button class="edit">Edit</button>
+                <button class="delete">Del</button>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td>36</td>
+            <td>Tristan</td>
+            <td>Rodriguez</td>
+            <td>tr@gmail.com</td>
+            <td>201-555-5555</td>
+            <td>New York, New York</td>
+            <td>Reading</td>
+            <td>
+              <div class="action-buttons">
+                <button class="edit">Edit</button>
+                <button class="delete">Del</button>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td>37</td>
+            <td>Andrea</td>
+            <td>Jones</td>
+            <td>aj@gmail.com</td>
+            <td>503-555-5555</td>
+            <td>Porland, Oregon</td>
+            <td>Programming</td>
+            <td>
+              <div class="action-buttons">
+                <button class="edit">Edit</button>
+                <button class="delete">Del</button>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td>38</td>
+            <td>Elliott</td>
+            <td>Rechardson</td>
+            <td>er@gmail.com</td>
+            <td></td>
+            <td>Boise, Idaho</td>
+            <td></td>
+            <td>
+              <div class="action-buttons">
+                <button class="edit">Edit</button>
+                <button class="delete">Del</button>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td>39</td>
+            <td>June</td>
+            <td>Bug</td>
+            <td>jb@gmail.com</td>
+            <td></td>
+            <td></td>
+            <td>Cooking</td>
+            <td>
+              <div class="action-buttons">
+                <button class="edit">Edit</button>
+                <button class="delete">Del</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="buttons">
+        <button class="download">Download CSV</button>
+      </div>
+    </div>
+  </body>
+</html>

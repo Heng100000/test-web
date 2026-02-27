@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .output {
+            border: 1px solid black;
+            padding: 10px;
+            margin-top: 10px;
+            min-height: 40px;
+        }
+    </style>
+
+</head>
+<body>
+    <h1>Vehicle Info</h1>
+    <label for="">
+        Brand: 
+        <input type="text" id="brand" value="Toyota">
+    </label>
+    <label for="">
+        Model:
+        <input type="text" id="model" value="Corolla">
+    </label>
+    <label for="">
+        Doors:
+        <input type="text" id="doors" value="4">
+    </label>
+    <button id="create-car">Create Car</button>
+    <div class="output" id="output"></div>
+
+
+    <script>
+        class Vehicle {
+            constructor(brand, model) {
+                this.brand = brand;
+                this.model = model;
+            }
+
+            description() {
+                return 'Vehicle: ' + this.brand + ' ' + this.model;
+            }
+        }
+
+        class Car extends Vehicle {
+            constructor(brand, model, doors) {
+                super(brand, model);
+                this.doors = doors;
+            }
+
+            description() {
+                return (
+                    'Car: ' + this.brand + ' ' + this.model + ' with ' + this.doors + ' doors'
+                )
+            }
+        }
+
+        const btn = document.getElementById('create-car');
+        const output = document.getElementById('output');
+
+        btn.addEventListener('click', function() {
+            const brand = document.getElementById('brand').value;
+            const model = document.getElementById('model').value;
+            const doors = parseInt(document.getElementById('doors').value, 10) || 0;
+
+            const car = new Car(brand, model, doors);
+            output.textContent = car.description();
+        })
+    </script>
+</body>
+</html>
